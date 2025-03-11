@@ -1,0 +1,767 @@
+****************************************************************
+1. Hello, World!
+print("Hello, World!")
+
+2. Add Two Numbers
+# Input numbers
+num1 = int(input("Enter first number: "))
+num2 = int(input("Enter second number: "))
+# Calculate sum
+sum_result = num1 + num2
+# Print result
+print("The sum is:", sum_result)
+
+3. Find the Square of a Number
+# Input number
+num = float(input("Enter a number: "))
+# Calculate square
+square = num ** 2
+# Print result
+print("The square of", num, "is", square)
+
+
+4. Check if a Number is Even or Odd
+# Input number
+num = int(input("Enter a number: "))
+# Check even or odd
+if num % 2 == 0:
+    print(num, "is Even")
+else:
+    print(num, "is Odd")
+
+5. Simple Interest Calculation
+# Input values
+principal = float(input("Enter the principal amount: "))
+rate = float(input("Enter the rate of interest: "))
+time = float(input("Enter the time (in years): "))
+# Calculate simple interest
+simple_interest = (principal * rate * time) / 100
+# Print result
+print("The Simple Interest is:", simple_interest)
+
+6. Calculate the Area of a Circle
+import math
+# Input radius
+radius = float(input("Enter the radius of the circle: "))
+# Calculate area
+area = math.pi * radius ** 2
+# Print result
+print("The area of the circle is:", area)
+
+7. Print Multiplication Table
+# Input number
+num = int(input("Enter a number: "))
+# Generate multiplication table
+print("Multiplication Table for", num)
+for i in range(1, 11):
+    print(num, "x", i, "=", num * i)
+
+8. Find the Largest of Three Numbers
+# Input numbers
+num1 = float(input("Enter first number: "))
+num2 = float(input("Enter second number: "))
+num3 = float(input("Enter third number: "))
+# Find largest
+if num1 >= num2 and num1 >= num3:
+    print("The largest number is:", num1)
+elif num2 >= num3:
+    print("The largest number is:", num2)
+else:
+    print("The largest number is:", num3)
+
+9. Check if a String is a Palindrome
+# Input string
+text = input("Enter a string: ")
+# Check palindrome
+if text == text[::-1]:
+    print(text, "is a palindrome")
+else:
+    print(text, "is not a palindrome")
+
+10. Factorial of a Number
+# Input number
+num = int(input("Enter a number: "))
+# Calculate factorial
+factorial = 1
+for i in range(1, num + 1):
+    factorial *= i
+# Print result
+print("The factorial of", num, "is", factorial)
+********************************************
+3. Evaluating Mathematical Expressions
+# Taking a mathematical expression as input
+expression = input("Enter a mathematical expression (e.g., 5 + 2 * 3): ")
+# Evaluating the expression
+result = eval(expression)
+# Displaying the result
+print(f"The result of the expression is: {result}")
+Example Output:
+Enter a mathematical expression (e.g., 5 + 2 * 3): 10 / 2 + 4
+The result of the expression is: 9.0
+
+4. Multiple Inputs in a Single Line
+# Taking multiple inputs separated by spaces
+inputs = input("Enter three numbers separated by spaces: ").split()
+# Converting strings to integers
+num1, num2, num3 = map(int, inputs)
+# Calculating the average
+average = (num1 + num2 + num3) / 3
+# Displaying the result
+print(f"The average of {num1}, {num2}, and {num3} is {average:.2f}.")
+Example Output:
+Enter three numbers separated by spaces: 4 8 12
+The average of 4, 8, and 12 is 8.00.
+
+5. Input Validation
+# Taking input with validation
+age = input("Enter your age: ")
+if age.isdigit():
+    print(f"Your age is {age}.")
+else:
+    print("Invalid input. Please enter a numeric value.")
+
+
+Example Output:
+
+Enter your age: twenty
+Invalid input. Please enter a numeric value.
+def check_numeric(x): if not isinstance(x, (int, float, complex)): raise ValueError('{0} is not numeric'.format(x))
+
+
+6. Handling Floating-Point Input
+# Taking floating-point input
+radius = float(input("Enter the radius of a circle: "))
+# Calculating the area
+area = 3.14159 * radius ** 2
+# Displaying the result
+print(f"The area of the circle with radius {radius} is {area:.2f}.")
+Example Output:
+Enter the radius of a circle: 3.5
+The area of the circle with radius 3.5 is 38.48.
+
+
+7. Interactive User Input
+# Asking the user a series of questions
+name = input("What is your name? ")
+age = input("How old are you? ")
+hobby = input("What is your favorite hobby? ")
+
+# Displaying a summary
+print(f"\nSummary:")
+print(f"Name: {name}")
+print(f"Age: {age}")
+print(f"Favorite Hobby: {hobby}")
+Example Output:
+
+What is your name? Alice
+How old are you? 25
+What is your favorite hobby? Painting
+Summary:
+Name: Alice
+Age: 25
+Favorite Hobby: Painting
+
+****************************************************************************
+****************************************************************************
+1. Boolean Expressions
+Boolean expressions evaluate to True or False. They are commonly used in conditional statements.
+Example:
+x = 10
+y = 20
+
+print(x > y)   # False
+print(x < y)   # True
+print(x == y)  # False
+print(x != y)  # True
+
+
+2. The Simple if Statement
+An if statement executes a block of code only if its condition evaluates to True.
+Example:
+python
+Copy code
+age = 18
+
+if age >= 18:
+    print("You are eligible to vote.")
+
+Output:
+You are eligible to vote.
+
+
+3. The if/else Statement
+The if/else statement provides an alternative block of code when the condition is False.
+Example:
+
+
+age = 16
+
+if age >= 18:
+    print("You are eligible to vote.")
+else:
+    print("You are not eligible to vote.")
+
+Output:
+
+You are not eligible to vote.
+
+
+4. Compound Boolean Expressions
+Compound boolean expressions combine multiple conditions using logical operators (and, or, not).
+Example:
+
+age = 25
+income = 50000
+
+if age > 18 and income > 40000:
+    print("You are eligible for the loan.")
+else:
+    print("You are not eligible for the loan.")
+
+Output:
+
+You are eligible for the loan.
+
+
+5. Nested Conditionals
+Nested conditionals allow placing one if statement inside another.
+Example:
+
+age = 20
+citizenship = "US"
+
+if age >= 18:
+    if citizenship == "US":
+        print("You are eligible to vote in the US.")
+    else:
+        print("You are not a US citizen.")
+else:
+    print("You are too young to vote.")
+
+Output:
+css
+Copy code
+You are eligible to vote in the US.
+
+
+6. Multi-way Decision Statements
+Multi-way decision-making is achieved using if, elif, and else.
+Example:
+
+grade = 85
+
+if grade >= 90:
+    print("You got an A!")
+elif grade >= 80:
+    print("You got a B!")
+elif grade >= 70:
+    print("You got a C.")
+else:
+    print("You need to work harder.")
+
+Output:
+css
+Copy code
+You got a B!
+
+
+1. Conditional Expressions (Ternary Operator)
+Conditional expressions (also called ternary operators) allow you to write a simple if-else in a single line.
+Syntax:
+python
+Copy code
+value_if_true if condition else value_if_false
+
+Example:
+
+age = 20
+status = "Adult" if age >= 18 else "Minor"
+print(status)  # Output: Adult
+
+
+2. Errors in Conditional Statements
+Errors can occur in conditional statements due to syntax issues, logical mistakes, or incorrect indentation. Here are some common examples:
+Syntax Error:
+python
+Copy code
+if x > 10     # Missing colon (:) causes a syntax error
+    print("x is greater than 10")
+
+Logical Error:
+python
+Copy code
+x = 5
+if x < 10:
+    print("x is greater than 10")  # Incorrect logic (should check `x > 10`)
+
+Indentation Error:
+python
+Copy code
+x = 10
+if x > 5:
+print("x is greater than 5")  # Improper indentation causes an error
+
+
+3. Iteration: The while Statement
+A while loop is used for indefinite iteration, where the loop continues as long as the condition is True.
+Example:
+python
+Copy code
+count = 1
+while count <= 5:
+    print(count)
+    count += 1
+
+Output:
+Copy code
+1
+2
+3
+4
+5
+
+
+4. Definite Loops vs. Indefinite Loops
+Definite Loops
+Definite loops are used when the number of iterations is known beforehand, typically using a for loop.
+Example (Definite Loop):
+python
+Copy code
+for i in range(5):  # Loop will iterate exactly 5 times
+    print(i)
+
+Output:
+Copy code
+0
+1
+2
+3
+4
+
+
+Indefinite Loops
+Indefinite loops are used when the number of iterations is unknown and depends on a condition, typically using a while loop.
+Example (Indefinite Loop):
+python
+Copy code
+user_input = ""
+while user_input != "stop":
+    user_input = input("Enter a command (type 'stop' to quit): ")
+    print(f"You entered: {user_input}")
+
+
+Key Differences Between Definite and Indefinite Loops
+Feature
+Definite Loops
+Indefinite Loops
+Type of Loop
+for loop
+while loop
+Iterations Known
+Known beforehand
+Unknown; depends on a condition
+Use Case
+Iterating over a range, list, etc.
+Waiting for a specific condition
+
+
+Practical Examples
+Combining Conditional Expressions with Loops
+
+numbers = [1, 2, 3, 4, 5]
+even_or_odd = ["Even" if n % 2 == 0 else "Odd" for n in numbers]
+print(even_or_odd)
+
+Output:
+
+['Odd', 'Even', 'Odd', 'Even', 'Odd']
+
+Using while for Input Validation
+
+user_age = -1
+while user_age < 0:
+    try:
+        user_age = int(input("Enter a valid age (>= 0): "))
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+print(f"You entered a valid age: {user_age}")
+
+1. The for Statement
+The for loop iterates over a sequence (like a list, string, or range).
+Example:
+
+# Iterate through a range of numbers
+for i in range(1, 6):
+    print(i)
+
+Output:
+Copy code
+1
+2
+3
+4
+5
+
+
+2. Nested Loops
+A nested loop is a loop inside another loop.
+Example:
+
+# Print a multiplication table
+for i in range(1, 4):  # Outer loop
+    for j in range(1, 4):  # Inner loop
+        print(f"{i} * {j} = {i * j}")
+
+Output:
+1 * 1 = 1
+1 * 2 = 2
+1 * 3 = 3
+2 * 1 = 2
+2 * 2 = 4
+2 * 3 = 6
+3 * 1 = 3
+3 * 2 = 6
+3 * 3 = 9
+
+
+3. Abnormal Loop Termination
+Loops can terminate prematurely using break or skip iterations using continue.
+Example with break:
+python
+Copy code
+for i in range(1, 10):
+    if i == 5:
+        break
+    print(i)
+
+Output:
+
+1
+2
+3
+4
+
+Example with continue:
+for i in range(1, 6):
+    if i == 3:
+        continue
+    print(i)
+
+Output:
+1
+2
+4
+5
+
+
+4. Infinite Loops
+An infinite loop runs indefinitely unless interrupted.
+Example:
+
+# A simple infinite loop
+while True:
+    user_input = input("Type 'exit' to quit: ")
+    if user_input == "exit":
+        break
+
+
+5. Computing Square Root
+Using the math module:
+
+import math
+num = 16
+sqrt = math.sqrt(num)
+print(f"The square root of {num} is {sqrt}")
+
+Custom method (Newton's Method):
+
+def newton_sqrt(number):
+    guess = number / 2.0
+    for _ in range(20):  # Iterate to improve accuracy
+        guess = (guess + number / guess) / 2.0
+    return guess
+print(newton_sqrt(16))  # Output: 4.0
+
+
+6. Drawing a Tree
+Using ASCII:
+
+def draw_tree(height):
+    for i in range(height):
+        print(" " * (height - i - 1) + "*" * (2 * i + 1))
+    print(" " * (height - 1) + "|")
+
+draw_tree(5)
+
+Output:
+markdown
+
+   *
+   ***
+  *****
+ *******
+*********
+    |
+
+Using Turtle:
+
+import turtle
+
+def draw_tree(branch_length):
+    if branch_length > 5:
+        turtle.forward(branch_length)
+        turtle.right(20)
+        draw_tree(branch_length - 15)
+        turtle.left(40)
+        draw_tree(branch_length - 15)
+        turtle.right(20)
+        turtle.backward(branch_length)
+
+turtle.left(90)
+draw_tree(100)
+turtle.done()
+
+
+7. Printing Prime Numbers
+Example:
+def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, int(num ** 0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+# Print primes from 1 to 50
+for num in range(1, 51):
+    if is_prime(num):
+        print(num, end=" ")
+Output:
+
+2 3 5 7 11 13 17 19 23 29 31 37 41 43 47
+
+
+***********************************************************************
+***********************************************************************
+***********************************************************************
+### 1. Introduction to Using Functions
+```python
+# Function to calculate the square of a number
+def square(number):
+    return number * number
+
+print(square(4))
+```
+
+### 2. Standard Mathematical Functions
+```python
+# Using math library
+import math
+number = 16
+print(f"Square root of {number}: {math.sqrt(number)}")
+```
+
+### 3. Time Functions
+import time 
+start_time = time.time()  # Records the start time
+for i in range(1000000):   # Loops through 1,000,000 iterations
+    pass                            # Empty loop (does nothing)
+end_time = time.time()    # Records the end time
+# Prints the execution time by subtracting the start time from the end time
+print(f"Execution time: {end_time - start_time} seconds")
+
+
+
+### 4. Random Numbers
+```python
+# Generate random numbers
+import random
+print(random.randint(1, 100))
+```
+
+### 5. Function Basics
+```python
+# Function to add two numbers
+def add(a, b):
+    return a + b
+
+print(add(3, 5))
+```
+
+### 6. Using Functions Main Function
+```python
+# Main function example
+def main():
+    print("This is the main function")
+
+if __name__ == "__main__":
+    main()
+```
+
+### 7. Parameter Passing
+```python
+# Function with parameters
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet("Alice")
+```
+
+### 8. Function Examples
+
+#### Better Organized Prime Generator
+```python
+# Prime number generator
+def is_prime(num):
+    if num < 2:
+        return False
+    for divisor in range(2, int(num**0.5) + 1):
+        if num % divisor == 0:
+            return False
+    return True
+
+def generate_primes(start, end):
+    primes = []
+    for num in range(start, end + 1):
+        if is_prime(num):
+            primes.append(num)
+    return primes
+
+print(generate_primes(10, 50))
+```
+
+#### Command Interpreter
+```python
+# Simple command interpreter
+def interpreter(command):
+    if command == "start":
+        print("System starting...")
+    elif command == "stop":
+        print("System stopping...")
+    else:
+        print("Unknown command")
+
+interpreter("start")
+```
+
+#### Restricted Input
+```python
+# Input validation
+def get_positive_number():
+    while True:
+        try:
+            num = int(input("Enter a positive number: "))
+            if num > 0:
+                return num
+            else:
+                print("Number must be positive.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+print(get_positive_number())
+```
+
+### 9. Recursion
+
+#### Making Functions Reusable
+```python
+# Factorial using recursion
+def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n - 1)
+
+print(factorial(5))
+```
+
+#### Documenting Functions and Modules
+```python
+# Example with docstrings
+def add(a, b):
+    """Returns the sum of two numbers."""
+    return a + b
+
+print(add(3, 4))
+print(add.__doc__)
+```
+
+#### Functions as Data
+```python
+# Passing functions as arguments
+def apply_function(func, value):
+    return func(value)
+
+def square(n):
+    return n * n
+
+print(apply_function(square, 5))
+```
+
+################ Lists
+
+### 1. Using Lists
+```python
+# Basic list operations
+fruits = ["apple", "banana", "cherry"]
+fruits.append("date")
+print(fruits)
+```
+
+### 2. List Assignment and Equivalence
+```python
+# Demonstrating shallow copy
+list1 = [1, 2, 3]
+list2 = list1
+list2.append(4)
+print(list1)  # Both lists change
+```
+
+### 3. List Bounds
+```python
+# Handling index errors
+numbers = [10, 20, 30]
+try:
+    print(numbers[5])
+except IndexError:
+    print("Index out of bounds")
+```
+
+### 4. Slicing
+```python
+# List slicing
+numbers = [1, 2, 3, 4, 5]
+print(numbers[1:4])
+```
+
+### 5. Lists and Functions
+```python
+# Passing lists to functions
+def square_elements(lst):
+    return [x * x for x in lst]
+
+print(square_elements([1, 2, 3, 4]))
+```
+
+### 6. Prime Generation with a List
+```python
+# Store primes in a list
+def generate_primes(n):
+    primes = []
+    for num in range(2, n + 1):
+        for divisor in range(2, int(num**0.5) + 1):
+            if num % divisor == 0:
+                break
+        else:
+            primes.append(num)
+    return primes
+
+print(generate_primes(50))
+```
+
+### 7. List Processing
+```python
+# Filtering even numbers
+def filter_evens(numbers):
+    return [num
+
+
