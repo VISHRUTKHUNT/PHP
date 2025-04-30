@@ -1,0 +1,1093 @@
+1.Create a Windows application in C# for
+registration form and fill the details and when
+pryou click the submit button, it displays all the
+details. First name , last name , middle
+name , gender , city , hobby , image , email-id,
+password , phone no , about us.
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs"
+Inherits="pro_1.WebForm1" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+ <title></title>
+</head>
+<body>
+ <form id="form1" runat="server">
+ <div>
+ <h2>Registration Form</h2>
+ <label>First Name:</label>
+ <asp:TextBox ID="txtFirstName" runat="server"></asp:TextBox>
+ <br />
+ <br />
+<label>Last Name:</label>
+ <asp:TextBox ID="txtLastName" runat="server"></asp:TextBox>
+ <br />
+ <br />
+<label>Middle Name:</label>
+ <asp:TextBox ID="txtMiddleName" runat="server"></asp:TextBox>
+ <br />
+<br />
+ <label>Gender:</label>
+ <asp:DropDownList ID="ddlGender" runat="server">
+ <asp:ListItem Value="Male">Male</asp:ListItem>
+ <asp:ListItem Value="Female">Female</asp:ListItem>
+ <asp:ListItem Value="Other">Other</asp:ListItem>
+ </asp:DropDownList>
+ <br />
+ <br />
+<label>City:</label>
+ <asp:TextBox ID="txtCity" runat="server"></asp:TextBox>
+ <br />
+ <br />
+<label>Hobby:</label>
+ <asp:TextBox ID="txtHobby" runat="server"></asp:TextBox>
+ <br />
+ <br />
+<label>Image:</label>
+ <asp:FileUpload ID="fuImage" runat="server" />
+ <br />
+ <br />
+<label>Email ID:</label>
+ <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
+ <br />
+ <br />
+<label>Password:</label>
+ <asp:TextBox ID="txtPassword" runat="server"
+TextMode="Password"></asp:TextBox>
+ <br />
+<br />
+<label>Phone No:</label>
+ <asp:TextBox ID="txtPhoneNo" runat="server"></asp:TextBox>
+ <br />
+ <br />
+<label>About Us:</label>
+ <asp:TextBox ID="txtAboutUs" runat="server" TextMode="MultiLine"
+Rows="4"></asp:TextBox>
+ <br />
+ <br />
+<asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
+ <asp:Label ID="lblMessage" runat="server" ForeColor="Green"></asp:Label>
+ </div>
+ </form>
+</body>
+</html>
+
+.net code
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace pro_1
+{
+public partial class WebForm1 : System.Web.UI.Page
+{
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ }
+ protected void btnSubmit_Click(object sender, EventArgs e)
+ {
+ string firstName = txtFirstName.Text;
+ string lastName = txtLastName.Text;
+ string middleName = txtMiddleName.Text;
+ string gender = ddlGender.SelectedValue;
+ string city = txtCity.Text;
+ string hobby = txtHobby.Text;
+ string email = txtEmail.Text;
+ string password = txtPassword.Text;
+ string phoneNo = txtPhoneNo.Text;
+ string aboutUs = txtAboutUs.Text;
+string imagePath = string.Empty;
+ if (fuImage.HasFile)
+ {
+ string fileName = System.IO.Path.GetFileName(fuImage.FileName);
+ imagePath = @"C:\Users\iu2283830043\Pictures\Screenshots\img" + fileName; //
+Save to Images folder
+ fuImage.SaveAs(imagePath);
+ }
+string message = $"First Name: {firstName}<br />" +
+ $"Last Name: {lastName}<br />" +
+ $"Middle Name: {middleName}<br />" +
+$"Gender: {gender}<br />" +
+ $"City: {city}<br />" +
+ $"Hobby: {hobby}<br />" +
+ $"Email: {email}<br />" +
+ $"Password: {password}<br />" +
+ $"Phone No: {phoneNo}<br />" +
+ $"About Us: {aboutUs}<br />" +
+ $"Image Path: {imagePath}";
+lblMessage.Text = message;
+ }
+}
+}
+*********************************************************
+2.Change listbox values from listbox1 to listbox2
+and vice versa.
+
+form1.cs
+using System;
+using System.Windows.Forms;
+namespace ListBoxSwapApp
+{
+ public partial class Form1 : Form
+ {
+ public Form1()
+ {
+ InitializeComponent();
+ listBox1.Items.AddRange(new object[] { "Item 1", "Item 2", "Item 3", "Item 4" });
+ }
+ private void btnMoveRight_Click(object sender, EventArgs e)
+ {
+ MoveSelectedItems(listBox1, listBox2);
+ }
+ private void btnMoveLeft_Click(object sender, EventArgs e)
+ {
+ MoveSelectedItems(listBox2, listBox1);
+ }
+ private void MoveSelectedItems(ListBox source, ListBox destination)
+ {
+ while (source.SelectedItems.Count > 0)
+ {
+ object item = source.SelectedItems[0];
+ destination.Items.Add(item);
+ source.Items.Remove(item);
+ }
+ }
+ }
+}
+***********************************************************
+3.Create a rich text box with customised output.
+form1.cs
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+namespace WindowsFormsApp4
+{
+ public partial class Form1 : Form
+ {
+ public Form1()
+ {
+ InitializeComponent();
+ CustomizeRichTextBox();
+ }
+ private void CustomizeRichTextBox()
+ {
+ richTextBox2.Font = new Font("Arial", 12);
+ richTextBox2.ForeColor = Color.Black;
+ richTextBox2.BackColor = Color.LightYellow;
+ richTextBox2.BorderStyle = BorderStyle.FixedSingle
+richTextBox2.AppendText("Welcome to the Customized Rich Text Box!\n");
+ richTextBox2.AppendText("This is a demonstration of how to customize output.\n");
+ richTextBox2.SelectionColor = Color.Blue;
+ richTextBox2.AppendText("This text is blue.\n");
+ richTextBox2.SelectionFont = new Font("Arial", 14, FontStyle.Bold);
+ richTextBox2.AppendText("This text is bold and larger.\n");
+ richTextBox2.SelectionFont = richTextBox2.Font;
+ richTextBox2.SelectionColor = richTextBox2.ForeColor;
+ richTextBox2.AppendText("You can add more text and customize it as needed.\n");
+ }
+ private void Form1_Load(object sender, EventArgs e)
+ {
+ }
+private void richTextBox2_TextChanged(object sender, EventArgs e)
+ {}}
+***********************************************************
+4.Create a MDI form. If button 1 clicked , form1
+opened, button 2 clicked form2 opened, button 3
+clicked form3 opened and in this do addition and
+subtraction.
+
+Form1.cs
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+namespace Mdi_1
+{
+ public partial class Form1: Form
+ {
+public Form1()
+ {
+ InitializeComponent();
+ }
+ Form2 f2;
+ private void form2ToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ if (f2 == null)
+ {
+ f2 = new Form2();
+ f2.MdiParent = this;
+ f2.FormClosed += F2_FormClosed;
+ f2.Show();
+ }
+ else
+ f2.Activate();
+ }
+ private void F2_FormClosed(object sender, FormClosedEventArgs e)
+ {
+ f2 = null;
+ //throw new NotImplementedException();
+ }
+ private void form3ToolStripMenuItem_Click(object sender, EventArgs e)
+ {
+ Form3 f3 = new Form3();
+ f3.MdiParent = this;
+ f3.Show();
+ }
+ }
+}
+***********************************************************
+5.Display date and time using calendar control.
+
+Form1.cs (double click on format button)
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+namespace VBProject
+{
+ public partial class Form1: Form
+ {
+ public Form1()
+ {
+ InitializeComponent();
+ }
+private void textBox1_TextChanged(object sender, EventArgs e)
+ {
+ }
+ private void button1_Click(object sender, EventArgs e)
+ {
+ textBox1.Text = dateTimePicker1.Text;
+ }
+ private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+ {
+ }
+ }
+}
+***********************************************************
+6.Create a form for checking if a given number is
+odd or even.
+Form1.cs(Design)
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+namespace OddOrEven
+{
+ public partial class Form1: Form
+ {
+ public Form1()
+ {
+ InitializeComponent();
+ }
+ private void button2_Click(object sender, EventArgs e)
+ {
+ int num;
+ num = Convert.ToInt32(textBox1.Text);
+ if(num%2==0)
+ {
+ label3.Text = num + "is an Even Number";
+ }
+else
+ {
+ label3.Text = num + "is an Odd Number";
+ }
+ }
+ private void button1_Click(object sender, EventArgs e)
+ {
+ textBox1.Text = "";
+ label3.Text = "";
+ }
+ }
+}
+***********************************************************
+7.Store user value in a hidden field and display it
+in another control.
+.aspx file
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs"
+Inherits="pro_7.WebForm1" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+ <title></title>
+</head>
+<body>
+ <form id="form1" runat="server">
+ <div>
+ <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+ <br />
+ <asp:HiddenField ID="hiddenField" runat="server" />
+ <br />
+ <asp:Button ID="btnSubmit" runat="server" Text="Submit"
+OnClick="btnSubmit_Click" />
+ <br />
+ <br />
+ <asp:Label ID="lblDisplay" runat="server" Text="display"></asp:Label>
+ </div>
+ </form>
+</body>
+</html>
+
+.aspx.cs file
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace pro_7
+{
+ public partial class WebForm1 : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ if (!IsPostBack)
+ {
+ lblDisplay.Text = "";
+ }
+ }
+ protected void btnSubmit_Click(object sender, EventArgs e)
+ {
+ hiddenField.Value = TextBox1.Text;
+
+ lblDisplay.Text = hiddenField.Value;
+ }
+ }
+}
+***********************************************************
+8.Create form under Gallery navigation. Give 8
+images in this, when user click on image it
+redirect to another page which shows the
+Product Description.
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master"
+AutoEventWireup="true" CodeBehind="Gallery.aspx.cs"
+Inherits="WebApplication17.Gallery" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+<asp:ImageButton ID="ImageButton1" runat="server" Height="177px"
+ImageUrl="~/images/m1.jpeg" OnClick="ImageButton1_Click" Width="208px" />
+<asp:ImageButton ID="ImageButton2" runat="server" Height="177px"
+ImageUrl="~/images/m2.jpeg" Width="208px" OnClick="ImageButton2_Click" />
+<asp:ImageButton ID="ImageButton3" runat="server" Height="177px"
+ImageUrl="~/images/m3.jpeg" Width="208px" OnClick="ImageButton3_Click" />
+<asp:ImageButton ID="ImageButton4" runat="server" Height="177px"
+ImageUrl="~/images/m1.jpeg" Width="208px" OnClick="ImageButton4_Click" />
+<asp:ImageButton ID="ImageButton5" runat="server" Height="177px"
+ImageUrl="~/images/m2.jpeg" Width="208px" OnClick="ImageButton5_Click" />
+<asp:ImageButton ID="ImageButton6" runat="server" Height="177px"
+ImageUrl="~/images/m3.jpeg" Width="208px" OnClick="ImageButton6_Click" />
+<asp:ImageButton ID="ImageButton7" runat="server" Height="177px"
+ImageUrl="~/images/m1.jpeg" Width="208px" OnClick="ImageButton7_Click" />
+<asp:ImageButton ID="ImageButton8" runat="server" Height="177px"
+ImageUrl="~/images/m3.jpeg" Width="208px" OnClick="ImageButton8_Click" />
+</asp:Content>
+
+Gallery.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace WebApplication17
+{
+public partial class Gallery : System.Web.UI.Page
+{
+private object txtPostcode1;
+protected void Page_Load(object sender, EventArgs e)
+{
+}
+protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
+{
+Response.Redirect(string.Format("https://www.blackbox.ai/"));
+}
+protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
+{
+Response.Redirect(string.Format("https://www.blackbox.ai/"));
+}
+protected void ImageButton3_Click(object sender, ImageClickEventArgs e)
+{
+Response.Redirect(string.Format("https://www.blackbox.ai/"));
+}
+protected void ImageButton4_Click(object sender, ImageClickEventArgs e)
+{
+Response.Redirect(string.Format("https://www.blackbox.ai/"));
+}
+protected void ImageButton5_Click(object sender, ImageClickEventArgs e)
+{
+Response.Redirect(string.Format("https://www.blackbox.ai/"));
+}
+protected void ImageButton6_Click(object sender, ImageClickEventArgs e)
+{
+Response.Redirect(string.Format("https://www.blackbox.ai/"));
+}
+protected void ImageButton7_Click(object sender, ImageClickEventArgs e)
+{
+Response.Redirect(string.Format("https://www.blackbox.ai/"));
+}
+protected void ImageButton8_Click(object sender, ImageClickEventArgs e)
+{
+Response.Redirect(string.Format("https://www.blackbox.ai/"));
+}
+}
+}
+
+Site.Master
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs"
+Inherits="WebApplication17.SiteMaster" %>
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title><%: Page.Title %> - My ASP.NET Application</title>
+<asp:PlaceHolder runat="server">
+<%: Scripts.Render("~/bundles/modernizr") %>
+</asp:PlaceHolder>
+<webopt:bundlereference runat="server" path="~/Content/css" />
+<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body>
+<form runat="server">
+<asp:ScriptManager runat="server">
+<Scripts>
+<%--To learn more about bundling scripts in ScriptManager
+see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+<%--Framework Scripts--%>
+<asp:ScriptReference Name="MsAjaxBundle" />
+<asp:ScriptReference Name="jquery" />
+<asp:ScriptReference Name="bootstrap" />
+<asp:ScriptReference Name="WebForms.js" Assembly="System.Web"
+Path="~/Scripts/WebForms/WebForms.js" />
+<asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web"
+Path="~/Scripts/WebForms/WebUIValidation.js" />
+<asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web"
+Path="~/Scripts/WebForms/MenuStandards.js" />
+<asp:ScriptReference Name="GridView.js" Assembly="System.Web"
+Path="~/Scripts/WebForms/GridView.js" />
+<asp:ScriptReference Name="DetailsView.js" Assembly="System.Web"
+Path="~/Scripts/WebForms/DetailsView.js" />
+<asp:ScriptReference Name="TreeView.js" Assembly="System.Web"
+Path="~/Scripts/WebForms/TreeView.js" />
+<asp:ScriptReference Name="WebParts.js" Assembly="System.Web"
+Path="~/Scripts/WebForms/WebParts.js" />
+<asp:ScriptReference Name="Focus.js" Assembly="System.Web"
+Path="~/Scripts/WebForms/Focus.js" />
+<asp:ScriptReference Name="WebFormsBundle" />
+<%--Site Scripts--%>
+</Scripts>
+</asp:ScriptManager>
+<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse" datatarget=".navbar-collapse">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" runat="server" href="~/">Application name</a>
+</div>
+<div class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li><a runat="server" href="~/">Home</a></li>
+<li><a runat="server" href="~/About">About</a></li>
+<li><a runat="server" href="~/Gallery">Gallery</a></li>
+<li><a runat="server" href="~/Contact">Contact</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container body-content">
+<asp:ContentPlaceHolder ID="MainContent" runat="server">
+</asp:ContentPlaceHolder>
+<hr />
+<footer>
+<p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+</footer>
+</div>
+</form>
+</body>
+</html>
+***********************************************************
+9.Create a window form by using combobox
+control to add, delete , count and select the
+items.
+
+form1.cs
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+namespace ComboBoxExample
+{
+ public partial class Form1 : Form
+ {
+ public Form1()
+{
+ InitializeComponent();
+ }
+ private void Form1_Load(object sender, EventArgs e)
+ {
+ }
+ private void buttonAdd_Click(object sender, EventArgs e)
+ {
+ if (!string.IsNullOrWhiteSpace(textBoxItem.Text))
+ {
+ comboBoxItems.Items.Add(textBoxItem.Text);
+ textBoxItem.Clear(); // Clear the TextBox
+ }
+ }
+ private void buttonDelete_Click(object sender, EventArgs e)
+ {
+ if (comboBoxItems.SelectedItem != null)
+ {
+ comboBoxItems.Items.Remove(comboBoxItems.SelectedItem);
+ }
+ }
+ private void buttonCount_Click(object sender, EventArgs e)
+ {
+labelCount.Text = "Count: " + comboBoxItems.Items.Count;
+ }
+ private void buttonShowSelected_Click(object sender, EventArgs e)
+ {
+ if (comboBoxItems.SelectedItem != null)
+ {
+ labelSelected.Text = "Selected Item: " + comboBoxItems.SelectedItem.ToString();
+ }
+ else
+ {
+ labelSelected.Text = "No item selected.";
+ }
+ }
+ }
+}
+***********************************************************
+10.Create a web form by using listbox control to
+add, delete , count and select the items.
+ListBoxForm.aspx
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ListBoxForm.aspx.cs"
+Inherits="WebApplication25.ListBoxForm" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+ <title></title>
+</head>
+<body>
+ <form id="form1" runat="server">
+ <div>
+ <h2>ListBox Control Example</h2>
+<asp:ListBox ID="ListBox1" runat="server" SelectionMode="Multiple"
+ Width="200px" Height="100px"></asp:ListBox><br /><br />
+ <asp:TextBox ID="txtItem" runat="server" placeholder="Enter item"></asp:TextBox>
+ <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_Click" />
+ <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click"
+/><br /><br />
+
+ <asp:Label ID="lblCount" runat="server" Text="Count: 0"></asp:Label><br /><br />
+
+ <asp:Button ID="btnCount" runat="server" Text="Count Items"
+OnClick="btnCount_Click" />
+<asp:Button ID="btnSelect" runat="server" Text="Show Selected"
+OnClick="btnSelect_Click" /><br /><br />
+
+ <asp:Label ID="lblSelected" runat="server" Text=""></asp:Label>
+ </div>
+ </form>
+</body>
+</html>
+
+ListBoxForm.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace WebApplication25
+{
+ public partial class ListBoxForm : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ }
+ protected void btnAdd_Click(object sender, EventArgs e)
+ {
+ if (!string.IsNullOrEmpty(txtItem.Text))
+{
+ ListBox1.Items.Add(txtItem.Text);
+ txtItem.Text = string.Empty; // Clear the TextBox
+ }
+ }
+ protected void btnDelete_Click(object sender, EventArgs e)
+ {
+
+ for (int i = ListBox1.Items.Count - 1; i >= 0; i--)
+ {
+ if (ListBox1.Items[i].Selected)
+ {
+ ListBox1.Items.RemoveAt(i);
+ }
+ }
+ }
+ protected void btnCount_Click(object sender, EventArgs e)
+ {
+ lblCount.Text = "Count: " + ListBox1.Items.Count;
+ }
+ protected void btnSelect_Click(object sender, EventArgs e)
+ {
+ string selectedItems = "Selected Items: ";
+ foreach (var item in ListBox1.Items)
+ {
+ if (((ListItem)item).Selected)
+{
+ selectedItems += ((ListItem)item).Text + " ";
+ }
+ }
+ lblSelected.Text = selectedItems.Trim();
+ }
+ }
+}
+***********************************************************
+11.Create a web form to use AD Rotator in
+asp.net
+Adrotatorform.aspx
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdRotatorForm.aspx.cs"
+Inherits="WebApplication24.AdRotatorForm" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+ <title></title>
+</head>
+<body>
+ <form id="form1" runat="server">
+ <div>
+ <h2>Advertisement Rotator</h2>
+ <asp:AdRotator ID="AdRotator1" runat="server" Target="_blank"
+ AdvertisementFile="~/Ads.xml" />
+ </div>
+ </form>
+</body>
+</html>
+
+ADS.XML
+<?xml version="1.0" encoding="utf-8" ?>
+<Advertisements>
+ <Ad>
+ <ImageUrl>~/Images/ad1.jpg</ImageUrl>
+<NavigateUrl>http://www.example1.com</NavigateUrl>
+ <Impressions>1</Impressions>
+ </Ad>
+
+ <Ad>
+ <ImageUrl>~/Images/ad3.jpg</ImageUrl>
+ <NavigateUrl>http://www.example3.com</NavigateUrl>
+ <Impressions>1</Impressions>
+ </Ad>
+</Advertisements>
+***********************************************************
+12.Create a web form using all controls of
+Validation Control.
+VALIDATIONFORM.ASPX
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ValidationForm.aspx.cs"
+Inherits="WebApplication23.ValidationForm" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+ <title></title>
+</head>
+<body>
+ <form id="form1" runat="server">
+ <div>
+ <h2>User Registration Form</h2>
+ <table>
+ <tr>
+ <td><label for="txtName">Name:</label></td>
+ <td>
+ <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
+ <asp:RequiredFieldValidator ID="rfvName" runat="server"
+ ControlToValidate="txtName" ErrorMessage="Name is required!"
+ ForeColor="Red"></asp:RequiredFieldValidator>
+ </td>
+ </tr>
+ <tr>
+ <td><label for="txtEmail">Email:</label></td>
+ <td>
+ <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
+<asp:RequiredFieldValidator ID="rfvEmail" runat="server"
+ ControlToValidate="txtEmail" ErrorMessage="Email is required!"
+ ForeColor="Red"></asp:RequiredFieldValidator>
+ <asp:RegularExpressionValidator ID="revEmail" runat="server"
+ ControlToValidate="txtEmail" ErrorMessage="Invalid email format!"
+ ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
+ ForeColor="Red"></asp:RegularExpressionValidator>
+ </td>
+ </tr>
+ <tr>
+ <td><label for="txtPassword">Password:</label></td>
+ <td>
+ <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox>
+ <asp:RequiredFieldValidator ID="rfvPassword" runat="server"
+ ControlToValidate="txtPassword" ErrorMessage="Password is required!"
+ ForeColor="Red"></asp:RequiredFieldValidator>
+ <asp:RegularExpressionValidator ID="revPassword" runat="server"
+ ControlToValidate="txtPassword" ErrorMessage="Password must be at least 6 characters!"
+ ValidationExpression="^.{6,}$" ForeColor="Red"></asp:RegularExpressionValidator>
+ </td>
+ </tr>
+ <tr>
+ <td><label for="txtConfirmPassword">Confirm Password:</label></td>
+ <td>
+<asp:TextBox ID="txtConfirmPassword" runat="server"
+TextMode="Password"></asp:TextBox>
+ <asp:RequiredFieldValidator ID="rfvConfirmPassword" runat="server"
+ ControlToValidate="txtConfirmPassword" ErrorMessage="Please confirm
+your password!"
+ ForeColor="Red"></asp:RequiredFieldValidator>
+<asp:CompareValidator ID="cvPassword" runat="server"
+ ControlToCompare="txtPassword" ControlToValidate="txtConfirmPassword"
+ ErrorMessage="Passwords do not match!"
+ForeColor="Red"></asp:CompareValidator>
+ </td>
+ </tr>
+ </div>
+ </form>
+</body>
+</html>
+***********************************************************
+13.Create a web from to make Master page and
+Context page .
+SITE1.MASTER
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs"
+Inherits="WebApplication22.Site1" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+ <title></title>
+ <asp:ContentPlaceHolder ID="head" runat="server">
+ </asp:ContentPlaceHolder>
+</head>
+<body>
+ <form id="form1" runat="server">
+ <div>
+ <header>
+ <h1>My Website Header</h1>
+ </header>
+ <nav>
+ <ul>
+ <li><a href="Webform2.aspx">Home</a></li>
+ <li><a href="About.aspx">About</a></li>
+ </ul>
+ </nav>
+ <asp:ContentPlaceHolder ID="MainContent" runat="server">
+ </asp:ContentPlaceHolder>
+ <footer>
+<p>My Website Footer</p>
+ </footer>
+ </div>
+ </form>
+</body>
+</html>
+
+
+WEBFORM2.ASPX
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master"
+AutoEventWireup="true" CodeBehind="WebForm2.aspx.cs"
+Inherits="WebApplication22.WebForm2" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+ <h2>Welcome to My Website</h2>
+ <p>This is the home page content.</p>
+</asp:Content>
+***********************************************************
+1.Query string 
+
+Webform1.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace WebApplication4
+{
+ public partial class WebForm1 : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ }
+ protected void Button1_Click(object sender, EventArgs e)
+ {
+ Response.Redirect("WebForm2.aspx?firstname=" +
+TextBox1.Text + "&lastname=" + TextBox2.Text);
+ }
+ }
+}
+
+Webform2.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace WebApplication4
+{
+ public partial class WebForm2 : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ string firstname = Request.QueryString["firstname"];
+ string lastname = Request.QueryString["lastname"];
+ Label1.Text = "welcome" + firstname + " " + lastname;
+ }
+ protected void TextBox1_TextChanged(object sender, EventArgs e)
+ {
+
+ }
+ }
+}
+***************************************************
+2.view state
+Webform1.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace WebApplication5
+{
+ public partial class WebForm1 : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ }
+ protected void TextBox2_TextChanged(object sender, EventArgs e)
+ {
+ }
+ protected void Button1_Click(object sender, EventArgs e)
+ {
+ ViewState["username"] = TextBox1.Text;
+if (IsPostBack)
+ {
+ if (ViewState["counter"] != null)
+ {
+ int counter = Int32.Parse(ViewState["counter"].ToString());
+ counter = counter + 1;
+ViewState["counter"] = counter;
+ }
+ else
+ {
+ ViewState["counter"] = 1;
+ }
+ }
+ TextBox3.Text = ViewState["counter"].ToString();
+ }
+ protected void Button2_Click(object sender, EventArgs e)
+ {
+ TextBox2.Text = ViewState["username"].ToString();
+ TextBox3.Text = ViewState["counter"].ToString();
+ }
+ }
+}
+*********************************************************
+3.Cookies
+Webform1.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace WebApplication6
+{
+public partial class WebForm1 : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ }
+ protected void Button1_Click(object sender, EventArgs e)
+ {
+ Response.Cookies["name"].Value = TextBox1.Text;
+ Response.Cookies["name"].Expires =
+ DateTime.Now.AddMinutes(1);
+ TextBox2.Text = "Cookie Created";
+ TextBox1.Text = "";
+ }
+ protected void Button2_Click(object sender, EventArgs e)
+ {
+ if (Request.Cookies["name"] == null)
+ {
+ TextBox3.Text = "No cookie found";
+ }
+ else
+ {
+ TextBox3.Text = Request.Cookies["name"].Value;
+ TextBox4.Text = "Cookie retrieved";
+ }
+ }
+ }
+}
+*********************************************
+4.Session state
+webform1.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace WebApplication7
+{
+ public partial class WebForm1 : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ }
+ protected void Button1_Click(object sender, EventArgs e)
+ {
+ Session["name"] = TextBox1.Text;
+ Session["city"] = TextBox2.Text;
+ Response.Redirect("WebForm2.aspx");
+ }
+ }
+}
+
+Webform2.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace WebApplication7
+{
+ public partial class WebForm2 : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ }
+ protected void Button1_Click(object sender, EventArgs e)
+ {
+ TextBox1.Text = Session["name"].ToString();
+ TextBox2.Text = Session["city"].ToString();
+ }
+ }
+}
+**********************************************************
+5.Database Connection
+webform1.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace WebApplication1
+{
+ public partial class WebForm1 : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ SqlConnection cnn;
+ String ConnectionString = @"Data
+Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database1.mdf";
+ cnn = new SqlConnection(ConnectionString);
+ cnn.Open();
+Response.Write("connection made");
+ cnn.Close();
+ }
+ protected void Button1_Click(object sender, EventArgs e)
+ {
+ }
+ protected void SqlDataSource1_Selecting(object sender,
+SqlDataSourceSelectingEventArgs e)
+ {
+ SqlConnection con;
+ string a = @"Data
+Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database1.mdf";
+ con = new SqlConnection(a);
+ con.Open();
+ string Query = "insert into [table](Rollno,name) values (@Rollno,@name)";
+ using (SqlCommand cmd = new SqlCommand(Query, con))
+ {
+ cmd.Parameters.AddWithValue("@Rollno", TextBox1.Text);
+ cmd.Parameters.AddWithValue("@name", TextBox2.Text);
+ int rowsaffected = cmd.ExecuteNonQuery();
+ Response.Write("Student registeration Successfully!!!thank you");
+ con.Close();
+ }
+ }
+protected void Button2_Click(object sender, EventArgs e)
+ {
+ SqlConnection con = new SqlConnection(@"Data
+Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database1.mdf");
+ SqlCommand cmd = new SqlCommand(@"delete from[table]where [rollno]=' " +
+TextBox1.Text + "'", con);
+ con.Open();
+ cmd.ExecuteNonQuery();
+ Response.Write("delete successfully");
+ con.Close();
+ }
+ protected void SqlDataSource2_Selecting(object sender,
+SqlDataSourceSelectingEventArgs e)
+ {
+ }
+ }
+}
+*******************************************************
+6.Web Services(addition)
+webservice1.asmx.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Services;
+namespace WebApplication2
+{
+ /// <summary>
+ /// Summary description for WebService1
+ /// </summary>
+ [WebService(Namespace = "http://tempuri.org/")]
+ [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+ [System.ComponentModel.ToolboxItem(false)]
+ // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the
+following line.
+ // [System.Web.Script.Services.ScriptService]
+ public class WebService1 : System.Web.Services.WebService
+ {
+ [WebMethod]
+ public int addition(int a, int b)
+ {
+ return a + b;
+ }
+ }
+}
+**********************************************************
