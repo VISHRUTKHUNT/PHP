@@ -1,0 +1,1008 @@
+Call Api Demo
+
+Activity_main.XML 
+<?xml version="1.0" encoding="utf-8"?> 
+<androidx.constraintlayout.widget.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"  xmlns:tools="http://schemas.android.com/tools"  android:layout_width="match_parent" 
+ android:layout_height="match_parent" 
+ tools:context=".MainActivity"> 
+ <!-- Button to make call --> 
+ <EditText 
+ android:id="@+id/editText" 
+ android:layout_width="332dp" 
+ android:layout_height="49dp" 
+ android:autofillHints="name" 
+ android:hint="Enter a phone number..."  android:inputType="text" 
+ app:layout_constraintBottom_toBottomOf="parent"  app:layout_constraintEnd_toEndOf="parent"  app:layout_constraintStart_toStartOf="parent"  app:layout_constraintTop_toTopOf="parent"  app:layout_constraintVertical_bias="0.285" /> 
+ <Button 
+ android:id="@+id/button" 
+ android:layout_width="369dp" 
+ android:layout_height="67dp" 
+ android:backgroundTint="@color/purple_500"  android:text="Dial" 
+ android:textColor="@color/white" 
+ app:layout_constraintBottom_toBottomOf="parent"  app:layout_constraintEnd_toEndOf="parent"  app:layout_constraintHorizontal_bias="0.619"  app:layout_constraintStart_toStartOf="parent"  app:layout_constraintTop_toTopOf="parent" /> 
+</androidx.constraintlayout.widget.ConstraintLayout> 
+
+MainActivity.kt 
+
+import android.Manifest 
+import android.content.Intent 
+import android.content.pm.PackageManager 
+import android.net.Uri 
+import android.os.Bundle 
+import android.telephony.TelephonyManager 
+import android.widget.Button 
+import android.widget.EditText 
+import android.widget.Toast 
+import androidx.appcompat.app.AppCompatActivity import androidx.core.app.ActivityCompat
+class MainActivity : AppCompatActivity() { 
+ private lateinit var editTextPhoneNumber: EditText 
+ private lateinit var buttonCall: Button 
+ override fun onCreate(savedInstanceState: Bundle?) { 
+ super.onCreate(savedInstanceState) 
+ setContentView(R.layout.activity_main) 
+ editTextPhoneNumber = findViewById(R.id.editText)  buttonCall = findViewById(R.id.button) 
+ buttonCall.setOnClickListener { 
+ makePhoneCall() 
+ } 
+ } 
+ private fun makePhoneCall() { 
+ val phoneNumber = editTextPhoneNumber.text.toString() 
+ if (phoneNumber.isNotEmpty()) { 
+ if (ActivityCompat.checkSelfPermission(this,  Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {  ActivityCompat.requestPermissions(this,  
+arrayOf(Manifest.permission.CALL_PHONE), 1) 
+ } else { 
+ val callIntent = Intent(Intent.ACTION_CALL)  callIntent.data = Uri.parse("tel:$phoneNumber")  startActivity(callIntent) 
+ } 
+ } else { 
+ Toast.makeText(this, "Please enter a phone number",  Toast.LENGTH_SHORT).show() 
+ } 
+ } 
+ override fun onRequestPermissionsResult(requestCode: Int, permissions:  Array<out String>, grantResults: IntArray) { 
+ super.onRequestPermissionsResult(requestCode, permissions,  grantResults) 
+ if (requestCode == 1) { 
+ if (grantResults.isNotEmpty() && grantResults[0] ==  PackageManager.PERMISSION_GRANTED) { 
+ makePhoneCall() 
+ } else { 
+ Toast.makeText(this, "Permission DENIED",  Toast.LENGTH_SHORT).show() 
+ } 
+ } 
+ } 
+} 
+
+AndroidManifest.xml
+
+<?xml version="1.0" encoding="utf-8"?> 
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:tools="http://schemas.android.com/tools"> 
+ <uses-permission android:name="android.permission.CALL_PHONE"/> 
+ <application 
+ android:allowBackup="true" 
+ android:dataExtractionRules="@xml/data_extraction_rules"  android:fullBackupContent="@xml/backup_rules" 
+ android:icon="@mipmap/ic_launcher" 
+ android:label="@string/app_name" 
+ android:supportsRtl="true" 
+ android:theme="@style/Theme.CallDemo" 
+ tools:targetApi="31"> 
+ <activity 
+ android:name=".MainActivity" 
+ android:exported="true"> 
+ <intent-filter> 
+ <action android:name="android.intent.action.MAIN" /> 
+ <category android:name="android.intent.category.LAUNCHER" />  </intent-filter> 
+ </activity> 
+ </application> 
+</manifest>
+
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+
+Database Demo
+
+Activity_main. XML 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout 
+ xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"  xmlns:tools="http://schemas.android.com/tools"  android:layout_width="match_parent" 
+ android:layout_height="match_parent" 
+ android:orientation="vertical" 
+ tools:context=".MainActivity"> 
+ <!-- Edit text to enter name --> 
+ <EditText 
+ android:id="@+id/enterName" 
+ android:layout_width="match_parent" 
+ android:layout_height="wrap_content" 
+ android:hint="Enter Name" 
+ android:textSize="22sp" 
+ android:layout_margin="20sp"/> 
+ <!-- Edit text to enter age --> 
+ <EditText 
+ android:id="@+id/enterAge" 
+ android:layout_width="match_parent" 
+ android:layout_height="wrap_content" 
+ android:layout_margin="20sp" 
+ android:textSize="22sp" 
+ android:hint="Enter Age"/> 
+ <!-- Button to add Name --> 
+ <Button 
+ android:id="@+id/addName" 
+ android:layout_width="150sp" 
+ android:layout_gravity="center" 
+ android:background="@color/purple_200" 
+ android:text="Add" 
+ android:textColor="#ffffff" 
+ android:textSize="20sp" 
+ android:layout_height="wrap_content" 
+ android:layout_marginTop="20sp"/> 
+ <!-- Button to print Name --> 
+ <Button 
+ android:id="@+id/printN" 
+ android:layout_width="150sp" 
+ android:layout_gravity="center" 
+ android:background="@color/purple_200" 
+ android:text="Print" 
+ android:textColor="#ffffff" 
+ android:textSize="20sp" 
+ android:layout_height="wrap_content" 
+ android:layout_marginTop="20sp"/> 
+ <LinearLayout 
+ android:layout_width="match_parent" 
+ android:layout_height="wrap_content">
+ <!-- Text view to get all name --> 
+ <TextView 
+ android:id="@+id/Name" 
+ android:textAlignment="center" 
+ android:layout_weight="1" 
+ android:layout_width="match_parent"  android:layout_height="wrap_content"  android:layout_margin="20sp" 
+ android:text="Name\n\n" 
+ android:textSize="22sp" 
+ android:padding="10sp" 
+ android:textColor="#000000"/> 
+ <!-- Text view to get all ages --> 
+ <TextView 
+ android:layout_weight="1" 
+ android:id="@+id/Age" 
+ android:textAlignment="center" 
+ android:layout_width="match_parent"  android:layout_height="wrap_content"  android:layout_margin="20sp" 
+ android:text="Age\n\n" 
+ android:textSize="22sp" 
+ android:padding="10sp" 
+ android:textColor="#000000"/> 
+ </LinearLayout> 
+</LinearLayout> 
+
+MainActivity.kt 
+
+class MainActivity : AppCompatActivity() { 
+ @SuppressLint("Range") 
+ override fun onCreate(savedInstanceState: Bundle?) {  super.onCreate(savedInstanceState) 
+ setContentView(R.layout.activity_main)  val addName =findViewById<Button>(R.id.addName)  val enterName=findViewById<EditText>(R.id.enterName)  val enterAge=findViewById<EditText>(R.id.enterAge)  val printName=findViewById<Button>(R.id.printN)  val Name=findViewById<TextView>(R.id.Name)  val Age=findViewById<TextView>(R.id.Age)  // listener to our add name button 
+ addName.setOnClickListener{ 
+ // below we have created 
+ // a new DBHelper class, 
+ // and passed context to it 
+ val db = DBHelper(this, null) 
+ // creating variables for values 
+ // in name and age edit texts
+ val name = enterName.text.toString() 
+ val age = enterAge.text.toString() 
+ // calling method to add 
+ // name to our database 
+ db.addName(name, age) 
+ // Toast to message on the screen 
+ Toast.makeText(this, name + " added to database",  Toast.LENGTH_LONG).show() 
+ // at last, clearing edit texts 
+ enterName.text.clear() 
+ enterAge.text.clear() 
+ } 
+ // below code is to add on click 
+ // listener to our print name button 
+ printName.setOnClickListener{ 
+ // creating a DBHelper class 
+ // and passing context to it 
+ val db = DBHelper(this, null) 
+ // below is the variable for cursor 
+ // we have called method to get 
+ // all names from our database 
+ // and add to name text view 
+ val cursor = db.getName() 
+ // moving the cursor to first position and 
+ // appending value in the text view 
+ cursor!!.moveToFirst() 
+  
+Name.append(cursor.getString(cursor.getColumnIndex(DBHelper.NAME_COl)) +  "\n") 
+  
+Age.append(cursor.getString(cursor.getColumnIndex(DBHelper.AGE_COL)) + "\n") 
+ // moving our cursor to next 
+ // position and appending values 
+ while(cursor.moveToNext()){ 
+  
+Name.append(cursor.getString(cursor.getColumnIndex(DBHelper.NAME_COl)) +  "\n") 
+  
+Age.append(cursor.getString(cursor.getColumnIndex(DBHelper.AGE_COL)) + "\n")  } 
+ // at last we close our cursor 
+ cursor.close() 
+ } 
+ } 
+}
+
+MyDBHelper.kt 
+
+class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) { 
+ // below is the method for creating a database by a sqlite query  override fun onCreate(db: SQLiteDatabase) { 
+ // below is a sqlite query, where column names 
+ // along with their data types is given 
+ val query = ("CREATE TABLE " + TABLE_NAME + " ("  + ID_COL + " INTEGER PRIMARY KEY, " + 
+ NAME_COl + " TEXT," + 
+ AGE_COL + " TEXT" + ")") 
+ // we are calling sqlite 
+ // method for executing our query 
+ db.execSQL(query) 
+ } 
+ override fun onUpgrade(db: SQLiteDatabase, p1: Int, p2: Int) {  // this method is to check if table already exists  db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME) 
+ onCreate(db) 
+ } 
+ // This method is for adding data in our database 
+ fun addName(name : String, age : String ){ 
+ // below we are creating 
+ // a content values variable 
+ val values = ContentValues() 
+ // we are inserting our values 
+ // in the form of key-value pair 
+ values.put(NAME_COl, name) 
+ values.put(AGE_COL, age) 
+ // here we are creating a 
+ // writable variable of 
+ // our database as we want to 
+ // insert value in our database 
+ val db = this.writableDatabase 
+ // all values are inserted into database 
+ db.insert(TABLE_NAME, null, values) 
+ // at last we are 
+ // closing our database 
+ db.close() 
+ } 
+ // below method is to get 
+ // all data from our database 
+ fun getName(): Cursor? { 
+ // here we are creating a readable 
+ // variable of our database
+ // as we want to read value from it 
+ val db = this.readableDatabase 
+ // below code returns a cursor to 
+ // read data from the database 
+ return db.rawQuery("SELECT * FROM " + TABLE_NAME, null)  } 
+ companion object{ 
+ // here we have defined variables for our database 
+ // below is variable for database name 
+ private val DATABASE_NAME = "MyDB" 
+ // below is the variable for database version 
+ private val DATABASE_VERSION = 1 
+ // below is the variable for table name 
+ val TABLE_NAME = "my_table" 
+ // below is the variable for id column 
+ val ID_COL = "id" 
+ // below is the variable for name column 
+ val NAME_COl = "name" 
+ // below is the variable for age column 
+ val AGE_COL = "age" 
+ } 
+} 
+
+Manifest 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:tools="http://schemas.android.com/tools"> 
+ <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"  /> 
+ <application 
+ android:allowBackup="true" 
+ android:dataExtractionRules="@xml/data_extraction_rules"  android:fullBackupContent="@xml/backup_rules" 
+ android:icon="@mipmap/ic_launcher" 
+ android:label="@string/app_name" 
+ android:supportsRtl="true" 
+ android:theme="@style/Theme.DatabaseDemo" 
+ tools:targetApi="31"> 
+ <activity 
+ android:name=".MainActivity" 
+ android:exported="true"> 
+ <intent-filter> 
+ <action android:name="android.intent.action.MAIN" />
+ <category android:name="android.intent.category.LAUNCHER" />  </intent-filter> 
+ </activity> 
+ </application> 
+</manifest>
+
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+
+Intent Demo
+
+activity_main.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<androidx.constraintlayout.widget.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"  xmlns:tools="http://schemas.android.com/tools"  android:layout_width="match_parent" 
+ android:layout_height="match_parent" 
+ tools:context=".MainActivity"> 
+ <TextView 
+ android:id="@+id/textView" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:layout_marginBottom="8dp" 
+ android:layout_marginTop="8dp" 
+ android:text="First Activity" 
+ android:textSize="18sp" 
+ app:layout_constraintBottom_toBottomOf="parent"  app:layout_constraintHorizontal_bias="0.501"  app:layout_constraintLeft_toLeftOf="parent"  app:layout_constraintRight_toRightOf="parent"  app:layout_constraintTop_toTopOf="parent"  app:layout_constraintVertical_bias="0.172" /> 
+ <Button 
+ android:id="@+id/button" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:layout_marginBottom="8dp" 
+ android:layout_marginEnd="8dp" 
+ android:layout_marginStart="8dp" 
+ android:layout_marginTop="8dp" 
+ android:text="Click" 
+ app:layout_constraintBottom_toBottomOf="parent"  app:layout_constraintEnd_toEndOf="parent"  app:layout_constraintStart_toStartOf="parent"  app:layout_constraintTop_toBottomOf="@+id/textView"  app:layout_constraintVertical_bias="0.77" /> 
+</androidx.constraintlayout.widget.ConstraintLayout>
+MainActivity.kt 
+package com.example.intentdemo 
+import android.content.Intent 
+import androidx.appcompat.app.AppCompatActivity import android.os.Bundle 
+import android.widget.Button 
+class MainActivity : AppCompatActivity() { 
+ override fun onCreate(savedInstanceState: Bundle?) {  val id:Int = 10 
+ val language:String = "kotlin" 
+ super.onCreate(savedInstanceState) 
+ setContentView(R.layout.activity_main)  val button=findViewById<Button>(R.id.button)  button.setOnClickListener() { 
+ intent = Intent(this, SecondActivity::class.java)  intent.putExtra("id_value", id) 
+ intent.putExtra("language_value", language)  startActivity(intent) 
+ } 
+ } 
+} 
+
+activity_second.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<androidx.constraintlayout.widget.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"  xmlns:tools="http://schemas.android.com/tools"  android:layout_width="match_parent" 
+ android:layout_height="match_parent" 
+ tools:context=".SecondActivity"> 
+ <TextView 
+ android:id="@+id/textView2" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:layout_marginBottom="8dp" 
+ android:layout_marginEnd="8dp" 
+ android:layout_marginStart="8dp" 
+ android:layout_marginTop="8dp" 
+ android:text="SecondActivity" 
+ android:textSize="18sp" 
+ app:layout_constraintBottom_toBottomOf="parent"  app:layout_constraintEnd_toEndOf="parent"  app:layout_constraintStart_toStartOf="parent"  app:layout_constraintTop_toTopOf="parent"  app:layout_constraintVertical_bias="0.107" />
+ <Button 
+ android:id="@+id/button2" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content"  android:layout_marginBottom="8dp" 
+ android:layout_marginEnd="8dp" 
+ android:layout_marginStart="8dp" 
+ android:layout_marginTop="8dp" 
+ android:text="back" 
+ app:layout_constraintBottom_toBottomOf="parent"  app:layout_constraintEnd_toEndOf="parent"  app:layout_constraintStart_toStartOf="parent"  app:layout_constraintTop_toTopOf="parent"  app:layout_constraintVertical_bias="0.774" /> 
+</androidx.constraintlayout.widget.ConstraintLayout> SecondActivity.kt 
+package com.example.intentdemo 
+import android.content.Intent 
+import androidx.appcompat.app.AppCompatActivity import android.os.Bundle 
+import android.widget.Button 
+import android.widget.Toast 
+class SecondActivity : AppCompatActivity() {  override fun onCreate(savedInstanceState: Bundle?) {  super.onCreate(savedInstanceState) 
+ setContentView(R.layout.activity_second)  val button2=findViewById<Button>(R.id.button2)  val bundle=intent.extras 
+ val id=bundle?.get("id_value") 
+ val language = bundle?.get("language_value")  Toast.makeText(applicationContext,id.toString()+"  "+language,Toast.LENGTH_LONG).show() 
+ button2.setOnClickListener(){ 
+ intent = Intent(this,MainActivity::class.java)  startActivity(intent) 
+ } 
+ } 
+}
+
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+
+Msg Demo
+
+Activity_main.XML 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  android:layout_width="match_parent" 
+ android:layout_height="match_parent" 
+ android:orientation="vertical" 
+ android:padding="16dp"> 
+ <EditText 
+ android:id="@+id/tt1" 
+ android:layout_width="match_parent" 
+ android:layout_height="wrap_content" 
+ android:hint="Enter phone number" 
+ android:inputType="phone" /> 
+ <EditText 
+ android:id="@+id/tt2" 
+ android:layout_width="match_parent" 
+ android:layout_height="wrap_content" 
+ android:hint="Enter your message" 
+ android:inputType="textMultiLine" /> 
+ <Button 
+ android:id="@+id/Send" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:text="Send SMS" /> 
+</LinearLayout> 
+
+MainActivity.kt 
+
+import android.Manifest 
+import android.content.pm.PackageManager 
+import android.os.Bundle 
+import android.telephony.SmsManager 
+import android.widget.Button 
+import android.widget.EditText 
+import android.widget.Toast 
+import androidx.appcompat.app.AppCompatActivity 
+import androidx.core.app.ActivityCompat 
+class MainActivity : AppCompatActivity() { 
+ private lateinit var editTextPhoneNumber: EditText 
+ private lateinit var editTextMessage: EditText 
+ private lateinit var buttonSend: Button 
+ override fun onCreate(savedInstanceState: Bundle?) {  super.onCreate(savedInstanceState) 
+ setContentView(R.layout.activity_main) 
+ editTextPhoneNumber = findViewById(R.id.tt1)
+ editTextMessage = findViewById(R.id.tt2) 
+ buttonSend = findViewById(R.id.Send) 
+ buttonSend.setOnClickListener { 
+ sendSms() 
+ } 
+ } 
+ private fun sendSms() { 
+ val phoneNumber = editTextPhoneNumber.text.toString()  val message = editTextMessage.text.toString() 
+ if (phoneNumber.isNotEmpty() && message.isNotEmpty()) {  if (ActivityCompat.checkSelfPermission( 
+ this, 
+ Manifest.permission.SEND_SMS 
+ ) != PackageManager.PERMISSION_GRANTED 
+ ) { 
+ ActivityCompat.requestPermissions(this,  
+arrayOf(Manifest.permission.SEND_SMS), 1) 
+ } else { 
+ val smsManager = SmsManager.getDefault() 
+ smsManager.sendTextMessage(phoneNumber, null, message, null,  null) 
+ Toast.makeText(this, "SMS sent successfully!",  Toast.LENGTH_SHORT).show() 
+ } 
+ } else { 
+ Toast.makeText(this, "Please enter both phone number and  message", Toast.LENGTH_SHORT) 
+ .show() 
+ } 
+ } 
+ override fun onRequestPermissionsResult( 
+ requestCode: Int, 
+ permissions: Array<out String>, 
+ grantResults: IntArray 
+ ) { 
+ super.onRequestPermissionsResult(requestCode, permissions,  grantResults) 
+ if (requestCode == 1) { 
+ if (grantResults.isNotEmpty() && grantResults[0] ==  PackageManager.PERMISSION_GRANTED) { 
+ sendSms() 
+ } else { 
+ Toast.makeText(this, "Not Granted",  
+Toast.LENGTH_SHORT).show() 
+ } 
+ } 
+ } 
+} 
+
+AndroidManifest.xml
+
+<?xml version="1.0" encoding="utf-8"?> 
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:tools="http://schemas.android.com/tools"> 
+ <uses-permission android:name="android.permission.SEND_SMS"/> 
+ <application 
+ android:allowBackup="true" 
+ android:dataExtractionRules="@xml/data_extraction_rules"  android:fullBackupContent="@xml/backup_rules" 
+ android:icon="@mipmap/ic_launcher" 
+ android:label="@string/app_name" 
+ android:supportsRtl="true" 
+ android:theme="@style/Theme.MsgDemo" 
+ tools:targetApi="31"> 
+ <activity 
+ android:name=".MainActivity" 
+ android:exported="true"> 
+ <intent-filter> 
+ <action android:name="android.intent.action.MAIN" /> 
+ <category android:name="android.intent.category.LAUNCHER" />  </intent-filter> 
+ </activity> 
+ </application> 
+</manifest>
+
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+
+Notification
+
+activity_main.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<RelativeLayout 
+ xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:tools="http://schemas.android.com/tools" 
+ android:layout_width="match_parent" 
+ android:layout_height="match_parent" 
+ tools:context=".MainActivity"> 
+ <Button 
+ android:id="@+id/btn" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:layout_centerInParent="true" 
+ android:text="Show Notification" /> 
+</RelativeLayout> 
+
+MainActivity.kt 
+
+package com.example.notificationdemo 
+import android.Manifest 
+import android.annotation.SuppressLint 
+import android.app.Notification 
+import android.app.NotificationChannel 
+import android.app.NotificationManager 
+import android.app.PendingIntent 
+import android.content.Context 
+import android.content.Intent 
+import android.content.pm.PackageManager 
+import android.graphics.BitmapFactory 
+import android.graphics.Color 
+import android.os.Build 
+import androidx.appcompat.app.AppCompatActivity 
+import android.os.Bundle 
+import android.widget.Button 
+import android.widget.RemoteViews 
+import androidx.core.app.ActivityCompat 
+import androidx.core.app.NotificationCompat 
+import androidx.core.app.NotificationManagerCompat 
+class MainActivity : AppCompatActivity() { 
+ private val channelId = "i.apps.notifications" // Unique channel ID for  notifications 
+ private val description = "Test notification" // Description for the  notification channel 
+ private val notificationId = 1234 // Unique identifier for the  notification
+ override fun onCreate(savedInstanceState: Bundle?) { 
+ super.onCreate(savedInstanceState) 
+ setContentView(R.layout.activity_main) 
+ val btn = findViewById<Button>(R.id.btn) 
+ // Create a notification channel (required for Android 8.0 and  higher) 
+ createNotificationChannel() 
+ btn.setOnClickListener { 
+ // Request runtime permission for notifications on Android 13 and  higher 
+ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {  if (ActivityCompat.checkSelfPermission( 
+ this, 
+Manifest.permission.POST_NOTIFICATIONS 
+ ) != PackageManager.PERMISSION_GRANTED 
+ ) { 
+ ActivityCompat.requestPermissions( 
+ this, 
+arrayOf(Manifest.permission.POST_NOTIFICATIONS), 
+ 101 
+ ) 
+return@setOnClickListener 
+ } 
+ } 
+ sendNotification() // Trigger the notification 
+ } 
+ } 
+ /** 
+ * Create a notification channel for devices running Android 8.0 or  higher. 
+ * A channel groups notifications with similar behavior.  */ 
+ private fun createNotificationChannel() { 
+ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {  val notificationChannel = NotificationChannel( 
+ channelId, 
+ description, 
+ NotificationManager.IMPORTANCE_HIGH 
+ ).apply { 
+ enableLights(true) // Turn on notification light  lightColor = Color.GREEN 
+ enableVibration(true) // Allow vibration for notifications  } 
+ val notificationManager =  
+getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager   
+notificationManager.createNotificationChannel(notificationChannel)  } 
+ } 
+ /** 
+ * Build and send a notification with a custom layout and action.  */
+ @SuppressLint("MissingPermission") 
+ private fun sendNotification() { 
+ // Intent that triggers when the notification is tapped  val intent = Intent(this, afterNotification::class.java).apply {  flags = Intent.FLAG_ACTIVITY_NEW_TASK or  
+Intent.FLAG_ACTIVITY_CLEAR_TASK 
+ } 
+ val pendingIntent = PendingIntent.getActivity( 
+ this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or  PendingIntent.FLAG_IMMUTABLE 
+ ) 
+ // Custom layout for the notification content 
+ val contentView = RemoteViews(packageName,  
+R.layout.activity_after_notification) 
+ // Build the notification 
+ val builder = NotificationCompat.Builder(this, channelId)  .setSmallIcon(R.drawable.ic_launcher_foreground) // Notification  icon 
+ .setContent(contentView) // Custom notification content  .setContentTitle("Hello") // Title displayed in the notification  .setContentText("Welcome to Android Lab!!") // Text displayed in  the notification 
+ .setContentIntent(pendingIntent) // Pending intent triggered when  tapped 
+ .setAutoCancel(true) // Dismiss notification when tapped  .setPriority(NotificationCompat.PRIORITY_HIGH) // Notification  priority for better visibility 
+ // Display the notification 
+ with(NotificationManagerCompat.from(this)) { 
+ notify(notificationId, builder.build()) 
+ } 
+ } 
+} 
+
+activity_after_notification.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<RelativeLayout 
+ xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:tools="http://schemas.android.com/tools" 
+ android:layout_width="match_parent" 
+ android:layout_height="match_parent" 
+ tools:context=".afterNotification"> 
+ <TextView 
+ android:id="@+id/textView" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:layout_centerInParent="true" 
+ android:text="Demo of notification" 
+ android:textSize="15sp" 
+ android:textStyle="bold" /> 
+</RelativeLayout>
+
+afterNotification.kt 
+
+package com.example.notificationdemo 
+import androidx.appcompat.app.AppCompatActivity import android.os.Bundle 
+class afterNotification : AppCompatActivity() {  override fun onCreate(savedInstanceState: Bundle?) {  super.onCreate(savedInstanceState) 
+ setContentView(R.layout.activity_after_notification)  } 
+}
+
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+
+Ratingbar Demo
+
+MainActivity.kt 
+
+import android.graphics.Color 
+import android.graphics.PorterDuff 
+import android.graphics.drawable.LayerDrawable 
+import androidx.appcompat.app.AppCompatActivity 
+import android.os.Bundle 
+import android.widget.Button 
+import android.widget.RatingBar 
+import android.widget.TextView 
+class MainActivity : AppCompatActivity() { 
+ private lateinit var ratingBar: RatingBar 
+ private lateinit var button: Button 
+ private lateinit var textView: TextView 
+ override fun onCreate(savedInstanceState: Bundle?) { 
+ super.onCreate(savedInstanceState) 
+ setContentView(R.layout.activity_main) 
+ ratingBar = findViewById(R.id.ratingBar) 
+ textView = findViewById(R.id.textView) 
+ button = findViewById(R.id.button) 
+ // Set click listener for the button 
+ button.setOnClickListener { 
+ // Display the rating value inside the TextView when the button  is clicked 
+ textView.text = buildString { 
+ append("You Rated : ") 
+ append(ratingBar.rating) 
+ } 
+ } 
+ // Change the color of the stars in the RatingBar 
+ val stars = ratingBar.progressDrawable as LayerDrawable  // Change the filled stars to green 
+ stars.getDrawable(2).setColorFilter(Color.BLUE,  
+PorterDuff.Mode.SRC_ATOP) 
+ } 
+} 
+
+activity_main.XML 
+
+<androidx.constraintlayout.widget.ConstraintLayout  
+xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto" 
+ xmlns:tools="http://schemas.android.com/tools" 
+ android:layout_width="match_parent" 
+ android:layout_height="match_parent" 
+ tools:context=".MainActivity">
+ <RatingBar 
+ android:id="@+id/ratingBar" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:layout_marginTop="32dp" 
+ android:layout_marginBottom="32dp" 
+ app:layout_constraintBottom_toTopOf="@+id/button"  app:layout_constraintLeft_toLeftOf="parent"  app:layout_constraintRight_toRightOf="parent"  app:layout_constraintTop_toBottomOf="@+id/textView2" /> 
+ <TextView 
+ android:id="@+id/textView2" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:text="Rate Me!!!" 
+ android:textColor="@android:color/background_dark"  android:textSize="32sp" 
+ app:layout_constraintBottom_toTopOf="@+id/ratingBar"  app:layout_constraintEnd_toEndOf="parent"  app:layout_constraintHorizontal_bias="0.5"  app:layout_constraintStart_toStartOf="parent"  app:layout_constraintTop_toTopOf="parent"  app:layout_constraintVertical_chainStyle="packed" /> 
+ <TextView 
+ android:id="@+id/textView" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:layout_marginTop="32dp" 
+ android:text="You Rated : _._" 
+ android:textColorHint="@color/purple_200"  android:textSize="24sp" 
+ app:layout_constraintBottom_toBottomOf="parent"  app:layout_constraintLeft_toLeftOf="parent"  app:layout_constraintRight_toRightOf="parent"  app:layout_constraintTop_toBottomOf="@+id/button" /> 
+ <Button 
+ android:id="@+id/button" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:text="Submit" 
+ app:layout_constraintBottom_toTopOf="@+id/textView"  app:layout_constraintLeft_toLeftOf="parent"  app:layout_constraintRight_toRightOf="parent"  app:layout_constraintTop_toBottomOf="@+id/ratingBar" /> 
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+
+SharedPreferencesDemo
+
+Activity_main.xml 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:tools="http://schemas.android.com/tools" 
+ android:layout_width="match_parent" 
+ android:layout_height="match_parent" 
+ android:orientation="vertical" 
+ android:gravity="center" 
+ tools:context=".MainActivity"> 
+ <TextView 
+ android:id="@+id/textview" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:text="Shared Preferences Demo" 
+ android:textColor="@android:color/black" 
+ android:textSize="24sp" /> 
+ <!--EditText to take the data from the user and save the data in  SharedPreferences--> 
+ <EditText 
+ android:id="@+id/edit1" 
+ android:layout_width="match_parent" 
+ android:layout_height="wrap_content" 
+ android:layout_marginStart="16dp" 
+ android:layout_marginTop="8dp" 
+ android:layout_marginEnd="16dp" 
+ android:hint="Enter your Name" 
+ android:padding="10dp" /> 
+ <!--EditText to take the data from the user and save the data in  SharedPreferences--> 
+ <EditText 
+ android:id="@+id/edit2" 
+ android:layout_width="match_parent" 
+ android:layout_height="wrap_content" 
+ android:layout_marginStart="16dp" 
+ android:layout_marginTop="8dp" 
+ android:layout_marginEnd="16dp" 
+ android:hint="Enter your Age" 
+ android:inputType="number" 
+ android:padding="10dp" /> 
+</LinearLayout> 
+
+MainActivity.kt
+
+class MainActivity : AppCompatActivity() { 
+ private lateinit var nameEditText: EditText 
+ private lateinit var ageEditText: EditText 
+ override fun onCreate(savedInstanceState: Bundle?) {  super.onCreate(savedInstanceState) 
+ setContentView(R.layout.activity_main) 
+ nameEditText = findViewById(R.id.edit1) 
+ ageEditText = findViewById(R.id.edit2) 
+ } 
+ override fun onResume() { 
+ super.onResume() 
+ // Retrieving stored data from SharedPreferences  val sharedPreferences = getSharedPreferences("UserPreferences",  MODE_PRIVATE) 
+ val savedName = sharedPreferences.getString("user_name", "")  val savedAge = sharedPreferences.getInt("user_age", 0) 
+ // Populating EditText fields with stored data 
+ nameEditText.setText(savedName) 
+ ageEditText.setText(if (savedAge > 0) savedAge.toString() else "")  } 
+ override fun onPause() { 
+ super.onPause() 
+ // Storing data in SharedPreferences 
+ val sharedPreferences = getSharedPreferences("UserPreferences",  MODE_PRIVATE) 
+ val editor = sharedPreferences.edit() 
+ // Retrieving user input and saving it 
+ editor.putString("user_name", nameEditText.text.toString()) 
+ val ageInput = ageEditText.text.toString() 
+ val userAge = if (ageInput.isEmpty()) 0 else ageInput.toInt()  editor.putInt("user_age", userAge) 
+ editor.apply() 
+ } 
+}
+
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+
+Calculator demo
+
+Activity_Main.XML 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout 
+ xmlns:android="http://schemas.android.com/apk/res/android"  android:layout_width="match_parent" 
+ android:layout_height="match_parent" 
+ android:orientation="vertical" 
+ android:background="@color/white" 
+ android:gravity="center" 
+ android:padding="16dp"> 
+ <EditText 
+ android:id="@+id/editText2" 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:layout_gravity="center_horizontal"  android:textAlignment="center" 
+ android:focusable="false" 
+ android:focusableInTouchMode="false" 
+ android:layout_marginTop="40sp" 
+ android:textSize="30dp" 
+ android:hint="Enter the Value" /> 
+ <LinearLayout 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:layout_gravity="center_horizontal"  android:layout_marginTop="16dp" 
+ android:orientation="horizontal"> 
+ <TextView 
+ android:id="@+id/result" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:textSize="20sp" 
+ android:text="Result: " /> 
+ <TextView 
+ android:id="@+id/resultText" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:textSize="20sp" 
+ android:text="0" /> 
+ </LinearLayout> 
+ <TableLayout 
+ android:layout_width="match_parent" 
+ android:layout_height="wrap_content" 
+ android:layout_marginTop="16dp"> 
+ <TableRow 
+ android:layout_width="match_parent"  android:layout_height="wrap_content"  android:gravity="center">
+ <Button 
+ android:id="@+id/num1" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/yellow"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="1"/> 
+ <Button 
+ android:id="@+id/num2" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/yellow"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="2"/> 
+ <Button 
+ android:id="@+id/num3" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/yellow"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="3"/> 
+ <Button 
+ android:id="@+id/add" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/teal_700"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="+"/> 
+ </TableRow> 
+ <TableRow 
+ android:layout_width="match_parent"  android:layout_height="wrap_content"  android:gravity="center"> 
+ <Button 
+ android:id="@+id/num4" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/yellow"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="4"/> 
+ <Button 
+ android:id="@+id/num5" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/yellow"
+ android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="5"/> 
+ <Button 
+ android:id="@+id/num6" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/yellow"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="6"/> 
+ <Button 
+ android:id="@+id/sub" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/teal_700"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="-"/> 
+ </TableRow> 
+ <TableRow 
+ android:layout_width="match_parent"  android:layout_height="wrap_content"  android:gravity="center"> 
+ <Button 
+ android:id="@+id/num7" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/yellow"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="7"/> 
+ <Button 
+ android:id="@+id/num8" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/yellow"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="8"/> 
+ <Button 
+ android:id="@+id/num9" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/yellow"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="9"/> 
+ <Button 
+ android:id="@+id/mul"
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/teal_700"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="X" /> 
+ </TableRow> 
+ <TableRow 
+ android:layout_width="match_parent"  android:layout_height="wrap_content"  android:gravity="center"> 
+ <Button 
+ android:id="@+id/dot" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/teal_700"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="." /> 
+ <Button 
+ android:id="@+id/zero" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/yellow"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="0" /> 
+ <Button 
+ android:id="@+id/clear_text"  android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/teal_700"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="CE" /> 
+ <Button 
+ android:id="@+id/div" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:backgroundTint="@color/teal_700"  android:textSize="15sp" 
+ android:textColor="@color/black"  android:text="/" /> 
+ </TableRow> 
+ </TableLayout> 
+ <Button 
+ android:id="@+id/submit" 
+ android:layout_width="wrap_content"  android:layout_height="wrap_content"
+ android:layout_gravity="center" 
+ android:layout_marginTop="40dp" 
+ android:backgroundTint="@color/yellow" 
+ android:textSize="15sp" 
+ android:textColor="@color/black" 
+ android:text="Submit" /> 
+</LinearLayout> 
+
+MainActivity.kt 
+
+class MainActivity : AppCompatActivity() { 
+ private lateinit var editText: EditText 
+ private lateinit var resultText: TextView 
+ private lateinit var addButton: Button 
+ private lateinit var subtractButton: Button 
+ private lateinit var multiplyButton: Button 
+ private lateinit var divideButton: Button 
+ private lateinit var equalButton: Button 
+ private lateinit var clearButton: Button 
+ private lateinit var numberButtons: Array<Button>  private var num1: Double = 0.0 
+ private var num2: Double = 0.0 
+ private var currentOperation: String = "" 
+ override fun onCreate(savedInstanceState: Bundle?) {  super.onCreate(savedInstanceState) 
+ setContentView(R.layout.activity_main) 
+ editText = findViewById(R.id.editText2) 
+ resultText = findViewById(R.id.resultText)  clearButton = findViewById(R.id.clear_text)  addButton = findViewById(R.id.add) 
+ subtractButton = findViewById(R.id.sub) 
+ multiplyButton = findViewById(R.id.mul) 
+ divideButton = findViewById(R.id.div) 
+ equalButton = findViewById(R.id.submit) 
+ numberButtons = arrayOf( 
+ findViewById(R.id.num1), 
+ findViewById(R.id.num2), 
+ findViewById(R.id.num3), 
+ findViewById(R.id.num4), 
+ findViewById(R.id.num5), 
+ findViewById(R.id.num6), 
+ findViewById(R.id.num7), 
+ findViewById(R.id.num8), 
+ findViewById(R.id.num9), 
+ findViewById(R.id.zero) 
+ ) 
+ numberButtons.forEachIndexed { index, button ->  button.setOnClickListener { 
+ editText.append(if (index == 9) "0" else (index +  1).toString())
+ } 
+ } 
+ addButton.setOnClickListener { setOperation("add") }  subtractButton.setOnClickListener { setOperation("subtract") }  multiplyButton.setOnClickListener { setOperation("multiply") }  divideButton.setOnClickListener { setOperation("divide") } 
+ clearButton.setOnClickListener { clearAll() } 
+ equalButton.setOnClickListener { calculateResult() }  } 
+ private fun setOperation(operation: String) { 
+ if (editText.text.isNotEmpty()) { 
+ num1 = editText.text.toString().toDouble()  currentOperation = operation 
+ editText.text.clear() // Clear for next input  } 
+ } 
+ private fun calculateResult() { 
+ if (editText.text.isNotEmpty()) { 
+ num2 = editText.text.toString().toDouble()  val result = when (currentOperation) { 
+ "add" -> num1 + num2 
+ "subtract" -> num1 - num2 
+ "multiply" -> num1 * num2 
+ "divide" -> if (num2 != 0.0) num1 / num2 else {  resultText.text = "Error" 
+ return 
+ } 
+ else -> 0.0 
+ } 
+ resultText.text = result.toString() 
+ currentOperation = "" // Reset operation 
+ } 
+ } 
+ private fun clearAll() { 
+ editText.text.clear() 
+ resultText.text = "0" 
+ currentOperation = "" // Reset operation 
+ } 
+}
